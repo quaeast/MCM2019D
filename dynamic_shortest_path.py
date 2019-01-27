@@ -44,8 +44,8 @@ def show_length(g, paths_dict):
         length = 0
         for j in range(len(cur_point)-1):
             length += g[cur_point[j]][cur_point[j+1]]['weight']
-        # print(i, end=': ')
-        # print(length)
+        print(i, end=': ')
+        print(length)
         numbers_of_time[int(length/10)] += 1
     print(numbers_of_time)
 
@@ -70,10 +70,11 @@ lvg = nx.Graph()
 lvg.add_weighted_edges_from(lv)
 
 
-add_fire_place(lvg, 328)
-add_fire_place(lvg, 419)
-add_fire_place(lvg, 408)
+# add_fire_place(lvg, 328)
+# add_fire_place(lvg, 419)
+# add_fire_place(lvg, 408)
 
+# path_blocked(g, ())
 
 
 #predict
