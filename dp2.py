@@ -4,6 +4,20 @@ import matplotlib.pyplot as plt
 
 arg = 0.25
 
+
+def get_time(path):
+    time = 0
+    if path['is_stairs']:
+        time = 1*(1+0.1*path['fre'])
+    else:
+        time = 0.83+0.27*path['fre']
+    if path['is_fire']==6:
+        time += 2
+    elif path['is_fire']==3:
+        time += 1
+    return time
+
+
 def show_labels(g):
     for i in g.edges():
         print(i, end = '')
@@ -42,26 +56,15 @@ def add_fire_place(g, source):
         i = all_path[j]
         if len(i)==2:
             g[i[0]][i[1]]['is_fire'] = 6
+            #
+            print(i)
         elif len(i)==3:
             g[i[1]][i[2]]['is_fire'] = 3
-
+            #
+            print(i)
 
 def path_blocked(g, path):
-    g.remove_edge(path[0], path[1])
-
-
-def get_time(path):
-    time = 0
-    if path['is_stairs']:
-        time = 1*(1+0.1*path['fre'])
-    else:
-        time = 0.83+0.27*path['fre']
-    if path['is_fire']==6:
-        time += 2
-    elif path['is_fire']==3:
-        time += 1
-    return time
-
+    g[path[0]][path[1]]['weight'] = 1000000
 
 # init grapg
 
@@ -71,12 +74,12 @@ lvg = nx.Graph()
 lvg.add_weighted_edges_from(lv)
 
 
-add_fire_place(lvg, 328)
-add_fire_place(lvg, 419)
-add_fire_place(lvg, 408)
+# add_fire_place(lvg, 328)
+# add_fire_place(lvg, 419)
+# add_fire_place(lvg, 408)
 
-# path_blocked(lvg, (218, 505))
-# path_blocked(lvg, (557, 505))
+path_blocked(lvg, (218, 505))
+
 
 #predict
 
@@ -103,7 +106,6 @@ for i in stairs:
         lvg[i[0]][i[1]]['is_stairs'] = True
     except:
         pass
-
 
 for i in lvg.node():
     path100 = nx.shortest_path(lvg, source = 100, target = i)
@@ -160,7 +162,7 @@ print(cal_s_and_ave(lvg))
 
 #show the length of every path
 
-#
+
 show_length(lvg, final_dict)
 
 
